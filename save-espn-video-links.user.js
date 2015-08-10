@@ -131,7 +131,7 @@ function openLinks( event ) {
 		return;
 	}
 
-	var receiver = window.open( 'http://127.0.0.1:3001/react.html' );
+	var receiver = window.open( 'http://127.0.0.1:3001/index.html' );
 	setTimeout( function() {
 		receiver.postMessage( items, 'http://127.0.0.1:3001' );
 	}, 2000 );
