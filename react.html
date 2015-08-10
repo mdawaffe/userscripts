@@ -12,7 +12,7 @@ function saveItemsToAdd( event ) {
 		return;
 	}
 
-	itemsToAdd = event.data;
+	itemsToAdd = itemsToAdd.concat( event.data );
 }
 window.addEventListener( 'message', saveItemsToAdd, false );
 </script>
