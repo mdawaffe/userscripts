@@ -20,10 +20,14 @@
 
 	"permissions": [
 		"tabs",
-		"http://127.0.0.1:3001/"
+		"http://127.0.0.1:3001/",
+		"https://mdawaffe.github.io/userscripts/",
 	],
 
 	"externally_connectable": {
-		"matches": ["http://127.0.0.1:3001/*"]
+		"matches": [
+			"http://127.0.0.1:3001/*",
+			"https://mdawaffe.github.io/userscripts/"
+		]
 	}
 }

@@ -131,9 +131,9 @@ function openLinks( event ) {
 		return;
 	}
 
-	var receiver = window.open( 'http://127.0.0.1:3001/index.html' );
+	var receiver = window.open( 'https://mdawaffe.github.io/userscripts/' );
 	setTimeout( function() {
-		receiver.postMessage( items, 'http://127.0.0.1:3001' );
+		receiver.postMessage( items, 'https://mdawaffe.github.io' );
 	}, 2000 );
 }
 
