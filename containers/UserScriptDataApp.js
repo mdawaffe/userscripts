@@ -6,8 +6,9 @@ import { PHASE_LOADING } from '../constants';
 
 import * as actions from '../actions';
 
-import ItemList from '../components/ItemList';
 import Auth from '../components/Auth';
+import ItemForm from '../components/ItemForm';
+import ItemList from '../components/ItemList';
 
 @connect( state => ( {
 	items: state.items,
@@ -27,6 +28,11 @@ export default class UserScriptDataApp extends React.Component {
 			return <Auth authorize={authorize} {...bindActionCreators( actions, dispatch )} />;
 		}
 
-		return <ItemList items={items} {...bindActionCreators( actions, dispatch )} />;
+		return (
+			<div>
+				<ItemForm {...bindActionCreators( actions, dispatch )} />
+				<ItemList items={items} {...bindActionCreators( actions, dispatch )} />
+			</div>
+		);
 	}
 }
