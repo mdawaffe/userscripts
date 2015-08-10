@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>User Script Data</title>
+		<link rel="stylesheet" href="style.css">
+<script>
+var exectedOrigins = [ 'chrome-extension://dclphngceodkecoiekjcokamhajaehcf', 'http://espn.go.com' ];
+var itemsToAdd = [];
+function saveItemsToAdd( event ) {
+	if ( ! ~ exectedOrigins.indexOf( event.origin ) ) {
+		return;
+	}
+
+	itemsToAdd = event.data;
+}
+window.addEventListener( 'message', saveItemsToAdd, false );
+</script>
+		<script src="https://apis.google.com/js/api.js"></script>
+	</head>
+	<body>
+		<div id="app"></div>
+	</body>
+	<script src="build/app.js"></script>
+</html>

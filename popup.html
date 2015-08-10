@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<style>
+html, body, iframe {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	height: 100%;
+	width: 100%;
+}
+html, body {
+	overflow: hidden;
+}
+</style>
+<script>
+function go() {
+	var receiveFromOrigin = chrome.extension.getURL( '' ).slice( 0, -1 );
+
+	var messages = [];
+	var loaded = false;
+
+	var iframe = document.createElement( 'iframe' );
+	iframe.src = 'http://127.0.0.1:3001/react.html';
+	iframe.onload = function() {
+		loaded = true;
+
+		messages.forEach( sendMessage );
+		messages = [];
+	};
+
+	var sendToOrigin = iframe.src.split( '/' ).slice( 0, 3 ).join( '/' );
+
+	function sendMessage( message ) {
+		iframe.contentWindow.postMessage( message, sendToOrigin );
+	}
+
+	document.body.appendChild( iframe );
+
+	window.addEventListener( 'message', function( event ) {
+		if ( event.origin !== receiveFromOrigin ) {
+			return;
+		}
+
+		if ( loaded ) {
+			sendMessage( event.data );
+		} else {
+			messages.push( event.data );
+		}
+	} );
+}
+</script>
+<body onload="go()"></body>

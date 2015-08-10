@@ -1,0 +1,29 @@
+{
+	"manifest_version": 2,
+	"name": "Show ESPN Video Links",
+	"version": "0.0.1",
+	"description": "On a Watch ESPN page, adds a button that will open a new tab containing titles and links of the current list of videos",
+	"author": "mdawaffe",
+
+	"content_scripts": [
+		{
+			"js": [ "save-espn-video-links.user.js" ],
+			"matches": [ "http://espn.go.com/watchespn/*" ]
+		}
+	],
+	"converted_from_user_script": true,
+
+	"background": {
+		"persistent": false,
+		"scripts": [ "background.js" ]
+	},
+
+	"permissions": [
+		"tabs",
+		"http://127.0.0.1:3001/"
+	],
+
+	"externally_connectable": {
+		"matches": ["http://127.0.0.1:3001/*"]
+	}
+}

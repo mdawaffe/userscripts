@@ -89,26 +89,52 @@ function openLinks( event ) {
 	var links = event.target.closest( '.ui-tabs-panel' ).querySelectorAll( '.league .event a' );
 
 	var link, li, i, l = links.length;
-	var output = '';
-	var date, today = new Date;
+	var items = [], item = {};
+	var date, datetimeMS, datetime, today = new Date;
 
 	for ( i = 0; i < l; i++ ) {
+		item = {};
+
 		link = links[i];
+
+		if ( ! link.offsetWidth && ! link.offsetHeight && ! link.getClientRects().length ) {
+			continue;
+		}
+
 		li = link.closest( 'li' );
 		date = li.querySelector( '.date' );
 		if ( date ) {
-			output += trim( date.textContent );
+			datetimeMS = Date.parse( trim( date.textContent ) + ' ' + trim( li.querySelector( '.time' ).textContent ) )
+			if ( isNaN( datetimeMS ) ) {
+				datetime = today;
+			} else {
+				datetime = new Date( datetimeMS );
+				if ( today.getUTCMonth() > datetime.getUTCMonth ) {
+					datetime.setUTCFullYear( today.getUTCFullYear() - 1 );
+				} else {
+					datetime.setUTCFullYear( today.getUTCFullYear() );
+				}
+			}
 		} else {
-			output += today.getMonth().toString() + '/' + today.getDate().toString();
+			datetime = today;
 		}
-		output += ' ' + li.querySelector( '.time' ).textContent + ': ';
-		output += link.textContent.replace( /^\s+/, '' ).replace( /\s+$/, '' );
-		output += ': ';
-		output += 'http://espn.go.com/watchespn/player/_/id/' + link.attributes.onclick.value.match( /\d+/ )[0] + '/';
-		output += '\n';
+		item.datetime = datetime.toISOString();
+		item.done = false;
+		item.title = trim( link.textContent );
+		item.url = 'http://espn.go.com/watchespn/player/_/id/' + link.attributes.onclick.value.match( /\d+/ )[0] + '/';;
+
+		items.push( item );
 	}
 
-	GM_openInTab( 'data:text/plain;charset=' + document.characterSet + ',' + encodeURIComponent( output ) );
+	if ( 'undefined' !== typeof chrome && chrome.runtime && chrome.runtime.sendMessage ) {
+		chrome.runtime.sendMessage( items );
+		return;
+	}
+
+	var receiver = window.open( 'http://127.0.0.1:3001/react.html' );
+	setTimeout( function() {
+		receiver.postMessage( items, 'http://127.0.0.1:3001' );
+	}, 2000 );
 }
 
 GM_addStyle( '#calendar-inactive { display: none !important; }' );
