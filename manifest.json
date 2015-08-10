@@ -21,7 +21,7 @@
 	"permissions": [
 		"tabs",
 		"http://127.0.0.1:3001/",
-		"https://mdawaffe.github.io/userscripts/",
+		"https://mdawaffe.github.io/userscripts/"
 	],
 
 	"externally_connectable": {
