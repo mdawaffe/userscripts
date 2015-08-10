@@ -119,7 +119,7 @@ google = new Google( CLIENT_ID, SCOPES, {
 		}, false );
 
 		setTimeout( function() {
-			console.log( window.itemsToAdd.length );
+			debug( 'Items to Add: %d', window.itemsToAdd.length );
 			window.itemsToAdd.forEach( function( item ) {
 				redux.dispatch( actions.addItem( item ) );
 			} );
