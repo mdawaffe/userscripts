@@ -6,7 +6,7 @@
 // @grant GM_openInTab
 // @grant GM_addStyle
 // @noframes
-// @version 0.0.1
+// @version 0.0.2
 // ==/UserScript==
 
 var tabs = document.getElementById( 'tabs' );
