@@ -86,7 +86,7 @@ function trim( text ) {
 function openLinks( event ) {
 	event.preventDefault();
 
-	var links = event.target.closest( '.ui-tabs-panel' ).querySelectorAll( '.league .event a' );
+	var links = event.target.closest( '.ui-tabs-panel' ).querySelectorAll( '.league .event a:first-of-type' );
 
 	var link, li, i, l = links.length;
 	var items = [], item = {};
