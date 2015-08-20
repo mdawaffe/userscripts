@@ -104,7 +104,7 @@ function openLinks( event ) {
 		li = link.closest( 'li' );
 		date = li.querySelector( '.date' );
 		if ( date ) {
-			datetimeMS = Date.parse( trim( date.textContent ) + ' ' + trim( li.querySelector( '.time' ).textContent ) )
+			datetimeMS = Date.parse( trim( date.textContent ) + '/' + today.getUTCFullYear().toString() + ' ' + trim( li.querySelector( '.time' ).textContent ) )
 			if ( isNaN( datetimeMS ) ) {
 				datetime = today;
 			} else {
