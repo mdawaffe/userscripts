@@ -51,3 +51,10 @@ export function setPhaseToReady() {
 		type: constants.PHASE_READY
 	}
 }
+
+export function collaboratorsChanged( count ) {
+	return {
+		type: constants.COLLABORATORS_COUNT,
+		data: count
+	}
+}

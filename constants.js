@@ -8,3 +8,5 @@ export const USER_FAIL = 'USER_FAIL';
 
 export const PHASE_LOADING = 'PHASE_LOADING';
 export const PHASE_READY = 'PHASE_READY';
+
+export const COLLABORATORS_COUNT = 'COLLABORATORS_COUNT';

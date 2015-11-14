@@ -117,7 +117,7 @@ function onFileLoaded( file ) {
 	var model = file.getModel();
 	var list = model.getRoot().get( 'list' );
 
-	this.callbacks.loaded( list );
+	this.callbacks.loaded( list, file );
 }
 
 function onError( error ) {

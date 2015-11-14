@@ -20,3 +20,10 @@ thead a.active {
 .error {
 	background-color: rgba(255,0,0,.2);
 }
+
+#collaborators {
+	position: absolute;
+	bottom: 0;
+	right: 1em;
+	font-size: smaller;
+}

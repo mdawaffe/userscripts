@@ -48,7 +48,7 @@ google = new Google( CLIENT_ID, SCOPES, {
 		redux.dispatch( actions.setUser( user ) );
 	},
 
-	loaded: function( list ) {
+	loaded: function( list, file ) {
 		app.setState( { list } );
 
 		redux.dispatch( actions.setPhaseToReady() );
@@ -60,6 +60,9 @@ google = new Google( CLIENT_ID, SCOPES, {
 		list.addEventListener( gapi.drive.realtime.EventType.VALUES_ADDED, itemsAdded );
 		list.addEventListener( gapi.drive.realtime.EventType.VALUES_REMOVED, itemsRemoved );
 		list.addEventListener( gapi.drive.realtime.EventType.VALUES_SET, itemSet );
+
+		file.addEventListener( gapi.drive.realtime.EventType.COLLABORATOR_JOINED, collaboratorsChanged );
+		file.addEventListener( gapi.drive.realtime.EventType.COLLABORATOR_LEFT, collaboratorsChanged );
 
 		function listIndexOf( url ) {
 			return list.indexOf( { url }, function( a, b ) {
@@ -147,4 +150,8 @@ function itemSet( event ) {
 			redux.dispatch( actions.markItemAsUndone( event.newValues[i], 'remote' ) );
 		}
 	}
+}
+
+function collaboratorsChanged( event ) {
+	redux.dispatch( actions.collaboratorsChanged( event.target.getCollaborators().length ) );
 }

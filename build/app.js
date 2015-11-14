@@ -69,7 +69,7 @@
 	
 	var _containersApp2 = _interopRequireDefault(_containersApp);
 	
-	var _stores = __webpack_require__(189);
+	var _stores = __webpack_require__(190);
 	
 	var stores = _interopRequireWildcard(_stores);
 	
@@ -81,11 +81,11 @@
 	
 	var constants = _interopRequireWildcard(_constants);
 	
-	var _debug = __webpack_require__(193);
+	var _debug = __webpack_require__(195);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
-	var _google = __webpack_require__(196);
+	var _google = __webpack_require__(198);
 	
 	var _google2 = _interopRequireDefault(_google);
 	
@@ -122,7 +122,7 @@
 			redux.dispatch(actions.setUser(user));
 		},
 	
-		loaded: function loaded(list) {
+		loaded: function loaded(list, file) {
 			app.setState({ list: list });
 	
 			redux.dispatch(actions.setPhaseToReady());
@@ -134,6 +134,9 @@
 			list.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, itemsAdded);
 			list.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, itemsRemoved);
 			list.addEventListener(gapi.drive.realtime.EventType.VALUES_SET, itemSet);
+	
+			file.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, collaboratorsChanged);
+			file.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, collaboratorsChanged);
 	
 			function listIndexOf(url) {
 				return list.indexOf({ url: url }, function (a, b) {
@@ -221,6 +224,10 @@
 				redux.dispatch(actions.markItemAsUndone(event.newValues[i], 'remote'));
 			}
 		}
+	}
+	
+	function collaboratorsChanged(event) {
+		redux.dispatch(actions.collaboratorsChanged(event.target.getCollaborators().length));
 	}
 
 /***/ },
@@ -21673,6 +21680,10 @@
 	
 	var _componentsItemList2 = _interopRequireDefault(_componentsItemList);
 	
+	var _componentsCollaboratorsCount = __webpack_require__(189);
+	
+	var _componentsCollaboratorsCount2 = _interopRequireDefault(_componentsCollaboratorsCount);
+	
 	var UserScriptDataApp = (function (_React$Component) {
 		_inherits(UserScriptDataApp, _React$Component);
 	
@@ -21691,6 +21702,7 @@
 				var phase = _props.phase;
 				var dispatch = _props.dispatch;
 				var authorize = _props.authorize;
+				var collaborators = _props.collaborators;
 	
 				switch (phase) {
 					case _constants.PHASE_LOADING:
@@ -21709,6 +21721,7 @@
 					'div',
 					null,
 					_react2['default'].createElement(_componentsItemForm2['default'], (0, _redux.bindActionCreators)(actions, dispatch)),
+					_react2['default'].createElement(_componentsCollaboratorsCount2['default'], { collaborators: collaborators }),
 					_react2['default'].createElement(_componentsItemList2['default'], _extends({ items: items }, (0, _redux.bindActionCreators)(actions, dispatch)))
 				);
 			}
@@ -21719,7 +21732,8 @@
 			return {
 				items: state.items,
 				user: state.user,
-				phase: state.phase
+				phase: state.phase,
+				collaborators: state.collaborators
 			};
 		})(UserScriptDataApp) || UserScriptDataApp;
 		return UserScriptDataApp;
@@ -21754,7 +21768,10 @@
 	var PHASE_LOADING = 'PHASE_LOADING';
 	exports.PHASE_LOADING = PHASE_LOADING;
 	var PHASE_READY = 'PHASE_READY';
+	
 	exports.PHASE_READY = PHASE_READY;
+	var COLLABORATORS_COUNT = 'COLLABORATORS_COUNT';
+	exports.COLLABORATORS_COUNT = COLLABORATORS_COUNT;
 
 /***/ },
 /* 184 */
@@ -21772,6 +21789,7 @@
 	exports.setUser = setUser;
 	exports.failUser = failUser;
 	exports.setPhaseToReady = setPhaseToReady;
+	exports.collaboratorsChanged = collaboratorsChanged;
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 	
@@ -21836,6 +21854,13 @@
 	function setPhaseToReady() {
 		return {
 			type: constants.PHASE_READY
+		};
+	}
+	
+	function collaboratorsChanged(count) {
+		return {
+			type: constants.COLLABORATORS_COUNT,
+			data: count
 		};
 	}
 
@@ -22415,6 +22440,58 @@
 /* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var CollaboratorsCount = (function (_React$Component) {
+		_inherits(CollaboratorsCount, _React$Component);
+	
+		function CollaboratorsCount() {
+			_classCallCheck(this, CollaboratorsCount);
+	
+			_get(Object.getPrototypeOf(CollaboratorsCount.prototype), "constructor", this).apply(this, arguments);
+		}
+	
+		_createClass(CollaboratorsCount, [{
+			key: "render",
+			value: function render() {
+				var collaborators = this.props.collaborators;
+	
+				return _react2["default"].createElement(
+					"p",
+					{ id: "collaborators" },
+					"Viewers: " + collaborators.toString()
+				);
+			}
+		}]);
+	
+		return CollaboratorsCount;
+	})(_react2["default"].Component);
+	
+	exports["default"] = CollaboratorsCount;
+	module.exports = exports["default"];
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, '__esModule', {
@@ -22423,24 +22500,29 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _items = __webpack_require__(190);
+	var _items = __webpack_require__(191);
 	
 	var _items2 = _interopRequireDefault(_items);
 	
-	var _user = __webpack_require__(191);
+	var _user = __webpack_require__(192);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _phase = __webpack_require__(192);
+	var _phase = __webpack_require__(193);
 	
 	var _phase2 = _interopRequireDefault(_phase);
+	
+	var _collaborators = __webpack_require__(194);
+	
+	var _collaborators2 = _interopRequireDefault(_collaborators);
 	
 	exports.items = _items2['default'];
 	exports.user = _user2['default'];
 	exports.phase = _phase2['default'];
+	exports.collaborators = _collaborators2['default'];
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22491,7 +22573,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22519,7 +22601,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22545,7 +22627,33 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 193 */
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+	exports['default'] = collaborators;
+	
+	var _constants = __webpack_require__(183);
+	
+	function collaborators(state, action) {
+		if (state === undefined) state = 0;
+	
+		switch (action.type) {
+			case _constants.COLLABORATORS_COUNT:
+				return action.data;
+		}
+	
+		return state;
+	}
+	
+	module.exports = exports['default'];
+
+/***/ },
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22555,7 +22663,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(194);
+	exports = module.exports = __webpack_require__(196);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -22719,7 +22827,7 @@
 
 
 /***/ },
-/* 194 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22735,7 +22843,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(195);
+	exports.humanize = __webpack_require__(197);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -22922,7 +23030,7 @@
 
 
 /***/ },
-/* 195 */
+/* 197 */
 /***/ function(module, exports) {
 
 	/**
@@ -23053,7 +23161,7 @@
 
 
 /***/ },
-/* 196 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23065,7 +23173,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _debug = __webpack_require__(193);
+	var _debug = __webpack_require__(195);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
@@ -23184,7 +23292,7 @@
 		var model = file.getModel();
 		var list = model.getRoot().get('list');
 	
-		this.callbacks.loaded(list);
+		this.callbacks.loaded(list, file);
 	}
 	
 	function onError(error) {
