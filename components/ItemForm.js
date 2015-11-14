@@ -9,6 +9,11 @@ export default class ItemForm extends React.Component {
 		};
 	}
 
+	now() {
+		const now = new Date;
+		return (new Date( now - now.getTimezoneOffset() * 60000 )).toISOString().split(".")[0];
+	}
+
 	handleFormSubmit( event ) {
 		const { addItem } = this.props;
 
@@ -16,7 +21,7 @@ export default class ItemForm extends React.Component {
 
 		addItem( {
 			done: false,
-			datetime: event.target.datetime.value,
+			datetime: event.target.datetime.value || this.now(),
 			title: event.target.title.value,
 			url: event.target.url.value
 		} );

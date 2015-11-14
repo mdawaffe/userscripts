@@ -21936,6 +21936,12 @@
 		}
 	
 		_createClass(ItemForm, [{
+			key: "now",
+			value: function now() {
+				var now = new Date();
+				return new Date(now - now.getTimezoneOffset() * 60000).toISOString().split(".")[0];
+			}
+		}, {
 			key: "handleFormSubmit",
 			value: function handleFormSubmit(event) {
 				var addItem = this.props.addItem;
@@ -21944,7 +21950,7 @@
 	
 				addItem({
 					done: false,
-					datetime: event.target.datetime.value,
+					datetime: event.target.datetime.value || this.now(),
 					title: event.target.title.value,
 					url: event.target.url.value
 				});
