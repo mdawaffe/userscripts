@@ -1,3 +1,7 @@
 thead {
 	display: none;
 }
+
+.error {
+	background-color: rgba(255,0,0,.2);
+}

@@ -5,7 +5,9 @@ export default class ItemForm extends React.Component {
 		super( props );
 
 		this.state = {
-			active: false
+			active: false,
+			canSubmit: false,
+			URLError: false
 		};
 	}
 
@@ -18,6 +20,11 @@ export default class ItemForm extends React.Component {
 		const { addItem } = this.props;
 
 		event.preventDefault();
+
+		if ( ! this.state.canSubmit ) {
+			this.setState( { URLError: true } );
+			return;
+		}
 
 		addItem( {
 			done: false,
@@ -33,6 +40,15 @@ export default class ItemForm extends React.Component {
 		event.preventDefault();
 
 		this.setState( { active: true } );
+	}
+
+	handleURLChange( event ) {
+		try {
+			let a = new URL( event.target.value );
+			this.setState( { canSubmit: true, URLError: false } );
+		} catch ( e ) {
+			this.setState( { canSubmit: false } );
+		}
 	}
 
 	render() {
@@ -56,8 +72,12 @@ export default class ItemForm extends React.Component {
 						<td><input id="title" name="title" type="text" /></td>
 					</tr>
 					<tr>
-						<th scope="row"><label htmlFor="url">URL</label></th>
-						<td><input id="url" name="url" type="url" /></td>
+						<th scope="row"
+							className={this.state.URLError ? "error" : ""}
+						><label htmlFor="url">URL</label></th>
+						<td><input id="url" name="url" type="url"
+							onChange={this.handleURLChange.bind(this)}
+						/></td>
 					</tr>
 				</table>
 				<p>

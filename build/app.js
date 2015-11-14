@@ -21931,7 +21931,9 @@
 			_get(Object.getPrototypeOf(ItemForm.prototype), "constructor", this).call(this, props);
 	
 			this.state = {
-				active: false
+				active: false,
+				canSubmit: false,
+				URLError: false
 			};
 		}
 	
@@ -21948,6 +21950,11 @@
 	
 				event.preventDefault();
 	
+				if (!this.state.canSubmit) {
+					this.setState({ URLError: true });
+					return;
+				}
+	
 				addItem({
 					done: false,
 					datetime: event.target.datetime.value || this.now(),
@@ -21963,6 +21970,16 @@
 				event.preventDefault();
 	
 				this.setState({ active: true });
+			}
+		}, {
+			key: "handleURLChange",
+			value: function handleURLChange(event) {
+				try {
+					var a = new URL(event.target.value);
+					this.setState({ canSubmit: true, URLError: false });
+				} catch (e) {
+					this.setState({ canSubmit: false });
+				}
 			}
 		}, {
 			key: "render",
@@ -22023,7 +22040,9 @@
 							null,
 							_react2["default"].createElement(
 								"th",
-								{ scope: "row" },
+								{ scope: "row",
+									className: this.state.URLError ? "error" : ""
+								},
 								_react2["default"].createElement(
 									"label",
 									{ htmlFor: "url" },
@@ -22033,7 +22052,9 @@
 							_react2["default"].createElement(
 								"td",
 								null,
-								_react2["default"].createElement("input", { id: "url", name: "url", type: "url" })
+								_react2["default"].createElement("input", { id: "url", name: "url", type: "url",
+									onChange: this.handleURLChange.bind(this)
+								})
 							)
 						)
 					),
