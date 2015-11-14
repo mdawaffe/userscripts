@@ -131,5 +131,8 @@ function onError( error ) {
 	case gapi.drive.realtime.ErrorType.NOT_FOUND :
 		console.error( error );
 		break;
+	default :
+		console.error( error );
+		break;
 	}
 }
