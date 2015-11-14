@@ -22275,7 +22275,7 @@
 						_react2['default'].createElement(
 							'a',
 							{ target: '_blank', href: item.url },
-							item.title
+							item.title || item.url
 						)
 					)
 				);

@@ -55,7 +55,7 @@ export default class Item extends React.Component {
 				<td onClick={this.handleDelete.bind( this )}>×</td>
 				<td><input type="checkbox" checked={item.done} onChange={this.handleCheckbox.bind( this )} /></td>
 				<td><time dateTime={item.datetime}>{ formatDate( item.datetime ) }</time></td>
-				<td><a target="_blank" href={item.url}>{item.title}</a></td>
+				<td><a target="_blank" href={item.url}>{item.title || item.url}</a></td>
 			</tr>
 		);
 	}
