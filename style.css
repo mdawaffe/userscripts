@@ -10,7 +10,6 @@ thead a {
 	text-decoration: none;
 	color: inherit;
 	opacity: .4;
-	letter-spacing: -.4em;
 }
 
 thead a.active {
