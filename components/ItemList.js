@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Item from './item';
+import parseDate from '../utils/parseDate';
 
 function stringCompare( a, b ) {
 	return a.localeCompare( b, undefined, { numeric: true, sensitivity: "base" } );
@@ -36,8 +37,8 @@ export default class ItemList extends React.Component {
 		case "title" :
 			return direction * stringCompare( a.title, b.title );
 		default :
-			let aDate = Date.parse( a.datetime );
-			let bDate = Date.parse( b.datetime );
+			let aDate = parseDate( a.datetime );
+			let bDate = parseDate( b.datetime );
 			let datetimeDiff;
 			if ( isNaN( aDate ) ) {
 				if ( isNaN( bDate ) ) {
@@ -48,7 +49,7 @@ export default class ItemList extends React.Component {
 			} else if ( isNaN( bDate ) ) {
 				datetimeDiff = -1;
 			} else {
-				datetimeDiff = Date.parse( a.datetime ) - Date.parse( b.datetime );
+				datetimeDiff = parseDate( a.datetime ) - parseDate( b.datetime );
 			}
 
 			if ( ! datetimeDiff ) {

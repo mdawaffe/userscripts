@@ -1,4 +1,5 @@
 import React from 'react';
+import parseDate from '../utils/parseDate';
 
 function pad( int ) {
 	var string = int.toString();
@@ -10,12 +11,9 @@ function pad( int ) {
 }
 
 function formatDate( datetime ) {
-	var ms = Date.parse( datetime );
+	var ms = parseDate( datetime );
 	var date, hours, modHours;
 	if ( isNaN( ms ) ) {
-		if ( ! ~ datetime.indexOf( "Z" ) ) {
-			return formatDate( datetime + "Z" );
-		}
 		return '';
 	}
 

@@ -69,7 +69,7 @@
 	
 	var _containersApp2 = _interopRequireDefault(_containersApp);
 	
-	var _stores = __webpack_require__(190);
+	var _stores = __webpack_require__(191);
 	
 	var stores = _interopRequireWildcard(_stores);
 	
@@ -81,11 +81,11 @@
 	
 	var constants = _interopRequireWildcard(_constants);
 	
-	var _debug = __webpack_require__(195);
+	var _debug = __webpack_require__(196);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
-	var _google = __webpack_require__(198);
+	var _google = __webpack_require__(199);
 	
 	var _google2 = _interopRequireDefault(_google);
 	
@@ -21680,7 +21680,7 @@
 	
 	var _componentsItemList2 = _interopRequireDefault(_componentsItemList);
 	
-	var _componentsCollaboratorsCount = __webpack_require__(189);
+	var _componentsCollaboratorsCount = __webpack_require__(190);
 	
 	var _componentsCollaboratorsCount2 = _interopRequireDefault(_componentsCollaboratorsCount);
 	
@@ -22139,6 +22139,10 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
+	var _utilsParseDate = __webpack_require__(189);
+	
+	var _utilsParseDate2 = _interopRequireDefault(_utilsParseDate);
+	
 	function stringCompare(a, b) {
 		return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
 	}
@@ -22185,8 +22189,8 @@
 					case "title":
 						return direction * stringCompare(a.title, b.title);
 					default:
-						var aDate = Date.parse(a.datetime);
-						var bDate = Date.parse(b.datetime);
+						var aDate = (0, _utilsParseDate2['default'])(a.datetime);
+						var bDate = (0, _utilsParseDate2['default'])(b.datetime);
 						var datetimeDiff = undefined;
 						if (isNaN(aDate)) {
 							if (isNaN(bDate)) {
@@ -22197,7 +22201,7 @@
 						} else if (isNaN(bDate)) {
 							datetimeDiff = -1;
 						} else {
-							datetimeDiff = Date.parse(a.datetime) - Date.parse(b.datetime);
+							datetimeDiff = (0, _utilsParseDate2['default'])(a.datetime) - (0, _utilsParseDate2['default'])(b.datetime);
 						}
 	
 						if (!datetimeDiff) {
@@ -22337,6 +22341,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _utilsParseDate = __webpack_require__(189);
+	
+	var _utilsParseDate2 = _interopRequireDefault(_utilsParseDate);
+	
 	function pad(int) {
 		var string = int.toString();
 		if (string.length < 2) {
@@ -22346,31 +22354,18 @@
 		return string;
 	}
 	
-	function formatDate(_x4) {
-		var _again2 = true;
-	
-		_function2: while (_again2) {
-			var datetime = _x4;
-			ms = date = hours = modHours = undefined;
-			_again2 = false;
-	
-			var ms = Date.parse(datetime);
-			var date, hours, modHours;
-			if (isNaN(ms)) {
-				if (! ~datetime.indexOf("Z")) {
-					_x4 = datetime + "Z";
-					_again2 = true;
-					continue _function2;
-				}
-				return '';
-			}
-	
-			date = new Date(ms);
-			hours = date.getUTCHours();
-			modHours = hours % 12;
-	
-			return pad(date.getUTCFullYear()) + '/' + pad(date.getUTCMonth() + 1) + '/' + pad(date.getUTCDate()) + ' ' + pad(modHours ? modHours : 12) + ':' + pad(date.getUTCMinutes()) + ' ' + (hours < 12 ? 'AM' : 'PM');
+	function formatDate(datetime) {
+		var ms = (0, _utilsParseDate2['default'])(datetime);
+		var date, hours, modHours;
+		if (isNaN(ms)) {
+			return '';
 		}
+	
+		date = new Date(ms);
+		hours = date.getUTCHours();
+		modHours = hours % 12;
+	
+		return pad(date.getUTCFullYear()) + '/' + pad(date.getUTCMonth() + 1) + '/' + pad(date.getUTCDate()) + ' ' + pad(modHours ? modHours : 12) + ':' + pad(date.getUTCMinutes()) + ' ' + (hours < 12 ? 'AM' : 'PM');
 	}
 	
 	var Item = (function (_React$Component) {
@@ -22455,6 +22450,27 @@
 
 /***/ },
 /* 189 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	exports["default"] = function (datetime) {
+		var ms = Date.parse(datetime);
+		if (isNaN(ms) && ! ~datetime.indexOf("Z")) {
+			ms = Date.parse(datetime + "Z");
+		}
+	
+		return ms;
+	};
+	
+	module.exports = exports["default"];
+
+/***/ },
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22506,7 +22522,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22517,19 +22533,19 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _items = __webpack_require__(191);
+	var _items = __webpack_require__(192);
 	
 	var _items2 = _interopRequireDefault(_items);
 	
-	var _user = __webpack_require__(192);
+	var _user = __webpack_require__(193);
 	
 	var _user2 = _interopRequireDefault(_user);
 	
-	var _phase = __webpack_require__(193);
+	var _phase = __webpack_require__(194);
 	
 	var _phase2 = _interopRequireDefault(_phase);
 	
-	var _collaborators = __webpack_require__(194);
+	var _collaborators = __webpack_require__(195);
 	
 	var _collaborators2 = _interopRequireDefault(_collaborators);
 	
@@ -22539,7 +22555,7 @@
 	exports.collaborators = _collaborators2['default'];
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22590,7 +22606,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22618,7 +22634,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22644,7 +22660,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22670,7 +22686,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22680,7 +22696,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(196);
+	exports = module.exports = __webpack_require__(197);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -22844,7 +22860,7 @@
 
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22860,7 +22876,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(197);
+	exports.humanize = __webpack_require__(198);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -23047,7 +23063,7 @@
 
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports) {
 
 	/**
@@ -23178,7 +23194,7 @@
 
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23190,7 +23206,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _debug = __webpack_require__(195);
+	var _debug = __webpack_require__(196);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
