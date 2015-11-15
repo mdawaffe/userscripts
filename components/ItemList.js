@@ -40,7 +40,11 @@ export default class ItemList extends React.Component {
 			let bDate = Date.parse( b.datetime );
 			let datetimeDiff;
 			if ( isNaN( aDate ) ) {
-				datetimeDiff = 1;
+				if ( isNaN( bDate ) ) {
+					datetimeDiff = 0;
+				} else {
+					datetimeDiff = 1;
+				}
 			} else if ( isNaN( bDate ) ) {
 				datetimeDiff = -1;
 			} else {

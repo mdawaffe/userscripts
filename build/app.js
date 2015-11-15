@@ -22189,7 +22189,11 @@
 						var bDate = Date.parse(b.datetime);
 						var datetimeDiff = undefined;
 						if (isNaN(aDate)) {
-							datetimeDiff = 1;
+							if (isNaN(bDate)) {
+								datetimeDiff = 0;
+							} else {
+								datetimeDiff = 1;
+							}
 						} else if (isNaN(bDate)) {
 							datetimeDiff = -1;
 						} else {
