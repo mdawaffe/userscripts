@@ -22342,18 +22342,31 @@
 		return string;
 	}
 	
-	function formatDate(datetime) {
-		var ms = Date.parse(datetime);
-		var date, hours, modHours;
-		if (isNaN(ms)) {
-			return '';
+	function formatDate(_x4) {
+		var _again2 = true;
+	
+		_function2: while (_again2) {
+			var datetime = _x4;
+			ms = date = hours = modHours = undefined;
+			_again2 = false;
+	
+			var ms = Date.parse(datetime);
+			var date, hours, modHours;
+			if (isNaN(ms)) {
+				if (! ~datetime.indexOf("Z")) {
+					_x4 = datetime + "Z";
+					_again2 = true;
+					continue _function2;
+				}
+				return '';
+			}
+	
+			date = new Date(ms);
+			hours = date.getUTCHours();
+			modHours = hours % 12;
+	
+			return pad(date.getUTCFullYear()) + '/' + pad(date.getUTCMonth() + 1) + '/' + pad(date.getUTCDate()) + ' ' + pad(modHours ? modHours : 12) + ':' + pad(date.getUTCMinutes()) + ' ' + (hours < 12 ? 'AM' : 'PM');
 		}
-	
-		date = new Date(ms);
-		hours = date.getUTCHours();
-		modHours = hours % 12;
-	
-		return pad(date.getUTCFullYear()) + '/' + pad(date.getUTCMonth() + 1) + '/' + pad(date.getUTCDate()) + ' ' + pad(modHours ? modHours : 12) + ':' + pad(date.getUTCMinutes()) + ' ' + (hours < 12 ? 'AM' : 'PM');
 	}
 	
 	var Item = (function (_React$Component) {

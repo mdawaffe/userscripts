@@ -13,6 +13,9 @@ function formatDate( datetime ) {
 	var ms = Date.parse( datetime );
 	var date, hours, modHours;
 	if ( isNaN( ms ) ) {
+		if ( ! ~ datetime.indexOf( "Z" ) ) {
+			return formatDate( datetime + "Z" );
+		}
 		return '';
 	}
 
