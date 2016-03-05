@@ -22296,7 +22296,7 @@
 					),
 					_react2['default'].createElement(
 						'tbody',
-						null,
+						{ className: 'items' },
 						sorted.map(function (item) {
 							return _react2['default'].createElement(_item2['default'], {
 								key: item.url,
@@ -22389,17 +22389,17 @@
 				deleteItem(item);
 			}
 		}, {
-			key: 'handleCheckbox',
-			value: function handleCheckbox(event) {
+			key: 'handleCheckboxHolderClick',
+			value: function handleCheckboxHolderClick(event) {
 				var _props2 = this.props;
 				var item = _props2.item;
 				var markItemAsDone = _props2.markItemAsDone;
 				var markItemAsUndone = _props2.markItemAsUndone;
 	
-				if (event.target.checked) {
-					markItemAsDone(item);
-				} else {
+				if (item.done) {
 					markItemAsUndone(item);
+				} else {
+					markItemAsDone(item);
 				}
 			}
 		}, {
@@ -22412,13 +22412,13 @@
 					null,
 					_react2['default'].createElement(
 						'td',
-						{ onClick: this.handleDelete.bind(this) },
+						{ className: 'delete', onClick: this.handleDelete.bind(this) },
 						'×'
 					),
 					_react2['default'].createElement(
 						'td',
-						null,
-						_react2['default'].createElement('input', { type: 'checkbox', checked: item.done, onChange: this.handleCheckbox.bind(this) })
+						{ className: 'done', onClick: this.handleCheckboxHolderClick.bind(this) },
+						_react2['default'].createElement('input', { type: 'checkbox', checked: item.done })
 					),
 					_react2['default'].createElement(
 						'td',
