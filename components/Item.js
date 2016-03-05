@@ -38,13 +38,13 @@ export default class Item extends React.Component {
 		deleteItem( item );
 	}
 
-	handleCheckbox( event ) {
+	handleCheckboxHolderClick( event ) {
 		const { item, markItemAsDone, markItemAsUndone } = this.props;
 
-		if ( event.target.checked ) {
-			markItemAsDone( item );
-		} else {
+		if ( item.done ) {
 			markItemAsUndone( item );
+		} else {
+			markItemAsDone( item );
 		}
 	}
 
@@ -53,8 +53,8 @@ export default class Item extends React.Component {
 
 		return (
 			<tr>
-				<td onClick={this.handleDelete.bind( this )}>×</td>
-				<td><input type="checkbox" checked={item.done} onChange={this.handleCheckbox.bind( this )} /></td>
+				<td className="delete" onClick={this.handleDelete.bind( this )}>×</td>
+				<td className="done" onClick={this.handleCheckboxHolderClick.bind( this )}><input type="checkbox" checked={item.done} /></td>
 				<td><time dateTime={item.datetime}>{ formatDate( item.datetime ) }</time></td>
 				<td><a target="_blank" href={item.url}>{item.title || item.url}</a></td>
 			</tr>

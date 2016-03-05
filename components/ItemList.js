@@ -105,7 +105,7 @@ export default class ItemList extends React.Component {
 						</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody className="items">
 				{ sorted.map( item =>
 					<Item
 						key={item.url}

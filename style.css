@@ -1,3 +1,7 @@
+html {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+}
+
 thead {
 	text-align: left;
 }
@@ -25,4 +29,43 @@ thead a.active {
 	bottom: 0;
 	right: 1em;
 	font-size: smaller;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+.items tr:hover {
+	background-color: #f9f9f9;
+}
+
+.items tr:nth-child(2n+1) {
+	background-color: #e6e6e6;
+}
+
+.items tr:nth-child(2n+1):hover {
+	background-color: #ddd;
+}
+
+.items td {
+	padding: .2em;
+}
+
+.delete, .done {
+	min-width: 1em;
+	text-align: center;
+	cursor: pointer;
+}
+
+.delete:hover {
+	background-color: #c00;
+	color: #fff;
+}
+
+.done input {
+	cursor: pointer;
+}
+
+.done:hover {
+	background-color: #0a0;
 }
