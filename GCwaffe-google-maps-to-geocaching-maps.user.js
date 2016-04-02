@@ -3,7 +3,7 @@
 // @namespace   https://github.com/mdawaffe/userscripts/
 // @description When viewing Google Maps, click a button to go to the same place on Geocaching Maps
 // @include     https://www.google.com/maps/*
-// @version     1.0.2
+// @version     1.0.3
 // @grant       none
 // ==/UserScript==
 
@@ -20,7 +20,6 @@ function google2geocaching( url ) {
   }
 
   var pieces = match[1].split(',');
-  console.log( pieces );
 
   return 'https://www.geocaching.com/map/default.aspx#?' +
     'll=' + pieces.slice(0, 2).join(',') +
@@ -60,7 +59,6 @@ function findButtonTarget() {
 }
 
 function placeButtonElement( buttonElement, target ) {
-  console.log( buttonElement, target );
   target.parentNode.insertBefore( buttonElement, target );
 }
 
