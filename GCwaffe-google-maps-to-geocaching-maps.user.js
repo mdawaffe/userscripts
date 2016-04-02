@@ -3,7 +3,7 @@
 // @namespace   https://github.com/mdawaffe/userscripts/
 // @description When viewing Google Maps, click a button to go to the same place on Geocaching Maps
 // @include     https://www.google.com/maps/*
-// @version     1
+// @version     1.0.1
 // @grant       none
 // ==/UserScript==
 
@@ -51,8 +51,12 @@ function createButtonElement() {
 }
 
 function findButtonTarget() {
-  // Fragile :(
-  return document.getElementById( 'gbsfw' );
+  try {
+    // Fragile. If something is broken, it's probably this.
+    return document.getElementById( 'vasquette' ).querySelector( '[title="Google apps"]' ).parentNode.parentNode;
+  } catch ( e ) {
+    return false;
+  }
 }
 
 function placeButtonElement( buttonElement, target ) {
