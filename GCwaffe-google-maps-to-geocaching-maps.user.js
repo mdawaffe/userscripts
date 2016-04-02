@@ -3,7 +3,7 @@
 // @namespace   https://github.com/mdawaffe/userscripts/
 // @description When viewing Google Maps, click a button to go to the same place on Geocaching Maps
 // @include     https://www.google.com/maps/*
-// @version     1.0.1
+// @version     1.0.2
 // @grant       none
 // ==/UserScript==
 
