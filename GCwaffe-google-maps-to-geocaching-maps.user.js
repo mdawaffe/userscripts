@@ -2,8 +2,10 @@
 // @name        GCWaffe Google Maps -> Geocaching Maps
 // @namespace   https://github.com/mdawaffe/userscripts/
 // @description When viewing Google Maps, click a button to go to the same place on Geocaching Maps
+// @include     https://www.google.com/maps
+// @include     https://www.google.com/maps?*
 // @include     https://www.google.com/maps/*
-// @version     1.0.5
+// @version     1.0.6
 // @grant       none
 // ==/UserScript==
 
