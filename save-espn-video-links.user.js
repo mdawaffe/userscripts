@@ -1,5 +1,8 @@
 // ==UserScript==
 // @match http://espn.go.com/watchespn/*
+// @match https://espn.go.com/watchespn/*
+// @match http://www.espn.com/watchespn/*
+// @match https://www.espn.com/watchespn/*
 // @name Show ESPN Video Links
 // @namespace mdawaffe
 // @description On a Watch ESPN page, adds a button that will open a new tab containing titles and links of the current list of videos.
