@@ -5,7 +5,13 @@
 		<title>User Script Data</title>
 		<link rel="stylesheet" href="style.css">
 <script>
-var exectedOrigins = [ 'chrome-extension://dclphngceodkecoiekjcokamhajaehcf', 'http://espn.go.com' ];
+var exectedOrigins = [
+	'chrome-extension://dclphngceodkecoiekjcokamhajaehcf',
+	'http://espn.go.com',
+	'https://espn.go.com',
+	'http://www.espn.com',
+	'https://www.espn.com'
+];
 var itemsToAdd = [];
 function saveItemsToAdd( event ) {
 	if ( ! ~ exectedOrigins.indexOf( event.origin ) ) {
