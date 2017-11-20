@@ -1,16 +1,18 @@
 // ==UserScript==
-// @match http://espn.go.com/watchespn/*
-// @match https://espn.go.com/watchespn/*
-// @match http://www.espn.com/watchespn/*
-// @match https://www.espn.com/watchespn/*
-// @name Show ESPN Video Links
-// @namespace mdawaffe
-// @description On a Watch ESPN page, adds a button that will open a new tab containing titles and links of the current list of videos.
-// @grant GM_openInTab
-// @grant GM_addStyle
+// @name         Show ESPN Video Links
+// @namespace    https://github.com/mdawaffe/userscripts/
+// @description  On a Watch ESPN page, adds a button that will open a new tab containing titles and links of the current list of videos.
+// @match        http://espn.go.com/watchespn/*
+// @match        https://espn.go.com/watchespn/*
+// @match        http://www.espn.com/watchespn/*
+// @match        https://www.espn.com/watchespn/*
+// @grant        GM_openInTab
+// @grant        GM_addStyle
 // @noframes
-// @version 0.0.3
+// @version      0.0.4
 // ==/UserScript==
+
+// Doesn't work anymore :)
 
 var tabs = document.getElementById( 'tabs' );
 
@@ -93,7 +95,7 @@ function openLinks( event ) {
 
 	var link, li, i, l = links.length;
 	var items = [], item = {};
-	var date, datetimeMS, datetime, today = new Date;
+	var date, datetimeMS, datetime, today = new Date();
 
 	for ( i = 0; i < l; i++ ) {
 		item = {};
@@ -107,7 +109,7 @@ function openLinks( event ) {
 		li = link.closest( 'li' );
 		date = li.querySelector( '.date' );
 		if ( date ) {
-			datetimeMS = Date.parse( trim( date.textContent ) + '/' + today.getUTCFullYear().toString() + ' ' + trim( li.querySelector( '.time' ).textContent ) )
+			datetimeMS = Date.parse( trim( date.textContent ) + '/' + today.getUTCFullYear().toString() + ' ' + trim( li.querySelector( '.time' ).textContent ) );
 			if ( isNaN( datetimeMS ) ) {
 				datetime = today;
 			} else {
@@ -124,7 +126,7 @@ function openLinks( event ) {
 		item.datetime = datetime.toISOString();
 		item.done = false;
 		item.title = trim( link.textContent );
-		item.url = 'http://espn.go.com/watchespn/player/_/id/' + link.attributes.onclick.value.match( /\d+/ )[0] + '/';;
+		item.url = 'http://espn.go.com/watchespn/player/_/id/' + link.attributes.onclick.value.match( /\d+/ )[0] + '/';
 
 		items.push( item );
 	}
